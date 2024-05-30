@@ -1,0 +1,63 @@
+/* guide-persistent-and-visible is a selector that's active on the homepage of yt */
+/* move the entire page up to where the search bar used to be */
+ytd-app:not([guide-persistent-and-visible]) ytd-page-manager {
+  margin-top: 0!important;
+}
+
+/* show background (black) until search bar is hidden */
+#background.ytd-masthead{
+  opacity: 1;
+  transition: opacity 0s 1s;
+}
+ytd-app:not([guide-persistent-and-visible]) #masthead-container:hover ytd-masthead #background.ytd-masthead{
+  opacity: 1!important;
+  transition: opacity 0s 0s;
+}
+
+/* hide search bar, show on hover */
+ytd-app:not([guide-persistent-and-visible]) ytd-masthead,
+ytd-app:not([guide-persistent-and-visible]) #masthead-container.ytd-app::after {
+  transform: translateY(var(--topMenuPosition, -56px));
+  transition: transform .1s .1s ease-out; /* times: duration, delay */
+}
+ytd-app:not([guide-persistent-and-visible]) #masthead-container:hover ytd-masthead,
+ytd-app:not([guide-persistent-and-visible]) #masthead-container:hover.ytd-app::after {
+  transform: translateY(0px);
+}
+
+/* hide the scroll bar */
+@supports (scrollbar-width: none) {
+  body {
+    scrollbar-width: none;
+  }
+}
+@supports not (scrollbar-width: none) {
+  body::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* change height and max-height of the player */
+ytd-watch-flexy[full-bleed-player] #full-bleed-container.ytd-watch-flexy{
+  height: 100vh!important;
+  max-height: 100vh!important;
+}
+
+/* Auto show menu on scroll (currently only in chromium) */
+@supports (animation-timeline: scroll(root)) {
+  body {
+    animation: topMenu linear 1s;
+    animation-timeline: scroll(root);
+    animation-range-start: 0vh;
+    animation-range-end: 1vh;
+    animation-fill-mode: both;
+  }
+  @keyframes topMenu {
+    from {
+      --topMenuPosition: -56px;
+    }
+    to {
+      --topMenuPosition: 0px;
+    }
+  }
+}
