@@ -25,6 +25,11 @@ ytd-app:not([guide-persistent-and-visible]) #masthead-container:hover.ytd-app::a
   transform: translateY(0px);
 }
 
+/* move "i" that shows the cards in video down to be clickable in non-fullscreen */
+.ytp-cards-button{
+  transform: translateY(56px)
+}
+
 /* hide the scroll bar */
 @supports (scrollbar-width: none) {
   body {
